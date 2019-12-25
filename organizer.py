@@ -44,8 +44,11 @@ for f in organized:
     file, file_extension = os.path.splitext(file)
 
     #GENERATE FOLDER FOT CERTAIN EXTENSION IF FILE ISN'T A FOLDER
-    if file_extension != '':
-        os.mkdir(file_extension)
+    try:
+        if file_extension != '':
+            os.mkdir(file_extension)
+    except FileExistsError:
+        os.chdir(folder)
 
     #MATCHES DESTINATION WITH DATA TYPE
     destination = folder+'/'+file_extension+'/'
