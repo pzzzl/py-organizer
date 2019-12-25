@@ -1,3 +1,4 @@
+# DEVELOPED BY PZL -- GITHUB.COM/PZZZL
 import os
 from shutil import move
 
@@ -26,24 +27,32 @@ for f in files:
     try:
         os.replace(file, destination)
     except PermissionError:
-        print('Failed to move file "%s": being used by another process.' % f)
+        print('\nFailed to move file "%s": being used by another process.\n' % f)
 
+#FOCUS ON NEW FOLDER
 os.chdir(folder)
 
+#ASSIGN ARRAY OF FILES IN THE DESIGNATED DIRECTORY
 organized = os.listdir()
 
+#GENERATE FOLDER STRUCTURE
 for f in organized:
+    #VARIABLE
     file = folder+'/'+f
-    file, file_extension = os.path.splitext(folder+'/'+f)
-    try:
-        os.chdir(file_extension)
-        os.chdir(folder)
-    except:
+
+    #EXTRACTS EXTENSION FROM FILE
+    file, file_extension = os.path.splitext(file)
+
+    #GENERATE FOLDER FOT CERTAIN EXTENSION IF FILE ISN'T A FOLDER
+    if file_extension != '':
         os.mkdir(file_extension)
+
+    #MATCHES DESTINATION WITH DATA TYPE
     destination = folder+'/'+file_extension+'/'
+
+    #FINALLY MOVES FILE TO IT'S DESTINATION
     try:
         move(folder+'/'+f, destination)
-        #os.replace(folder+'/'+f, destination)
-    except PermissionError:
-        print('Failed to move file "%s": being used by another process.' % f)
+    except:
+        print('"%s" already exists.' % f)
     print(file_extension)
